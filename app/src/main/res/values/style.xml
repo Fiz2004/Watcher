@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Watcher.TextView.Title" parent="">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Watcher.TextView.Price" parent="">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+</resources>
