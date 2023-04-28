@@ -1,18 +1,27 @@
 package com.faa.watcher.core.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.faa.watcher.core.presentation.main.model.DishItemUiComparator
 import com.faa.watcher.core.presentation.main.model.MainEvent
+import com.faa.watcher.core.presentation.main.model.MainViewEffect
 import com.faa.watcher.core.presentation.main.model.MainViewState
 import com.faa.watcher.databinding.FragmentMainBinding
+import com.faa.watcher.utils.LinearSpacingDecoration
+import com.faa.watcher.utils.collectUiEffect
 import com.faa.watcher.utils.collectUiState
+import com.faa.watcher.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+
+private const val MARGIN_VERTICAL_ITEM_DEFAULT = 4
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -50,9 +59,20 @@ class MainFragment : Fragment() {
         binding.init()
         binding.setupListeners()
         collectUiState(viewModel.viewState, { binding.updateScreenState(it) })
+        collectUiEffect(viewModel.viewEffect, ::reactTo)
     }
 
     private fun FragmentMainBinding.init() {
+        binding.lstDishes.adapter?.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        binding.lstDishes.addItemDecoration(
+            LinearSpacingDecoration(
+                0,
+                MARGIN_VERTICAL_ITEM_DEFAULT,
+                0,
+                MARGIN_VERTICAL_ITEM_DEFAULT
+            )
+        )
         lstDishes.adapter = adapter
     }
 
@@ -61,10 +81,28 @@ class MainFragment : Fragment() {
     }
 
     private fun FragmentMainBinding.updateScreenState(viewState: MainViewState) {
-        if (adapter.data.isEmpty() || viewState.dishes.isEmpty()) {
-            adapter.setNewInstance(viewState.dishes.toMutableList())
+        Log.d("Maingg", viewState.isLoading.toString())
+        networkState.progress.isVisible = viewState.isLoading
+        networkState.containerErrorState.isVisible = viewState.isError
+        containerContent.isVisible = if (viewState.isLoading && viewState.dishes?.isEmpty() == true) {
+            false
         } else {
-            adapter.setDiffNewData(viewState.dishes.toMutableList())
+            !viewState.isError
+        }
+        binding.btnDelete.isEnabled = viewState.isBtnEnabled && !viewState.isLoading
+
+        if (adapter.data.isEmpty() || viewState.dishes?.isEmpty() == true) {
+            adapter.setNewInstance(viewState.dishes?.toMutableList())
+        } else {
+            adapter.setDiffNewData(viewState.dishes?.toMutableList())
+        }
+    }
+
+    private fun reactTo(viewEffect: MainViewEffect) {
+        when (viewEffect) {
+            is MainViewEffect.ShowMessage -> {
+                showToast(viewEffect.message)
+            }
         }
     }
 

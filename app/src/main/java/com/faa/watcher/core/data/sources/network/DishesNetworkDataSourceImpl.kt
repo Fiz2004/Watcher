@@ -7,17 +7,17 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val AVERAGE_TIME_REQUEST = 800L
+private const val AVERAGE_TIME_REQUEST = 2500L
 
 @Singleton
 class DishesNetworkDataSourceImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : DishesNetworkDataSource {
 
-    override suspend fun getDishes(): List<DishDto> {
+    override suspend fun getDishes(): Result<List<DishDto>> {
         return withContext(dispatcher) {
             delay(AVERAGE_TIME_REQUEST)
-            Stubs.dishes
+            Result.success(Stubs.dishes)
         }
     }
 }
