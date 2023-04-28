@@ -49,6 +49,22 @@ class DishesRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getDish(id: String): Result<Dish> {
+        return dishes.value.fold(
+            onSuccess = {
+                val dish = it?.find { it.id == id }
+                if (dish != null) {
+                    Result.success(dish)
+                } else {
+                    Result.failure(Exception("Not Found value"))
+                }
+            },
+            onFailure = {
+                Result.failure(it)
+            }
+        )
+    }
+
     override fun observeDishes(): StateFlow<Result<List<Dish>?>> {
         return dishes.asStateFlow()
     }

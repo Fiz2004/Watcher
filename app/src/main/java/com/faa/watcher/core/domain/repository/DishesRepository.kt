@@ -7,4 +7,5 @@ interface DishesRepository {
     fun observeDishes(): StateFlow<Result<List<Dish>?>>
 
     suspend fun deleteDishes(dishes: List<Dish>): Result<Unit>
+    suspend fun getDish(id: String): Result<Dish>
 }

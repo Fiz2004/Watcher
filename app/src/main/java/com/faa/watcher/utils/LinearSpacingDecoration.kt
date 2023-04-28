@@ -4,6 +4,8 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+private const val MARGIN_VERTICAL_ITEM_DEFAULT = 4
+
 class LinearSpacingDecoration(
     private val marginStart: Int,
     private val marginTop: Int,
@@ -24,5 +26,14 @@ class LinearSpacingDecoration(
             right = view.resources.dip(marginEnd)
             bottom = view.resources.dip(marginBottom)
         }
+    }
+
+    companion object {
+        val default = LinearSpacingDecoration(
+            0,
+            MARGIN_VERTICAL_ITEM_DEFAULT,
+            0,
+            MARGIN_VERTICAL_ITEM_DEFAULT
+        )
     }
 }

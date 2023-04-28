@@ -128,6 +128,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun dishClicked(dish: DishItemUi) {
-
+        viewModelScope.launch {
+            _viewEffect.emit(MainViewEffect.MoveDetailScreen(dish.id))
+        }
     }
 }

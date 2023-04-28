@@ -5,12 +5,19 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Watcher.TextView.Title" parent="">
+    <style name="Watcher.TextView" parent=""></style>
+
+    <style name="Watcher.TextView.Title">
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="Watcher.TextView.Price" parent="">
+    <style name="Watcher.TextView.Price">
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="Watcher.TextView.Description">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 
 </resources>
