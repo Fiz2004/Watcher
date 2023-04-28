@@ -9,7 +9,8 @@ import com.faa.watcher.core.presentation.main.model.DishItemUi
 import com.faa.watcher.databinding.ItemDishBinding
 
 class DishAdapter(
-    private val itemClicked: (DishItemUi) -> Unit
+    private val itemClicked: (DishItemUi) -> Unit,
+    private val chkSelectChanged: (DishItemUi) -> Unit,
 ) : BaseQuickAdapter<DishItemUi, DishAdapter.DishViewHolder>(R.layout.item_dish) {
 
     override fun convert(holder: DishViewHolder, item: DishItemUi) {
@@ -34,6 +35,9 @@ class DishAdapter(
                         .into(imgImage)
                     root.setOnClickListener {
                         itemClicked(item)
+                    }
+                    chkSelect.setOnClickListener {
+                        chkSelectChanged(item)
                     }
                 }
             }

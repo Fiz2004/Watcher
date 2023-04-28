@@ -26,6 +26,9 @@ class MainFragment : Fragment() {
         DishAdapter(
             itemClicked = { item ->
                 viewModel.onEvent(MainEvent.DishClicked(item))
+            },
+            chkSelectChanged = { item ->
+                viewModel.onEvent(MainEvent.ChkSelectChanged(item))
             }
         ).apply {
             setDiffCallback(DishItemUiComparator)

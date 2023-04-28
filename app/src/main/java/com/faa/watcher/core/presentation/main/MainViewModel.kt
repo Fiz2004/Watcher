@@ -1,5 +1,6 @@
 package com.faa.watcher.core.presentation.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.faa.watcher.core.domain.usecase.GetDishesUsecase
@@ -39,7 +40,20 @@ class MainViewModel @Inject constructor(
         when (event) {
             MainEvent.DeleteButtonClicked -> deleteButtonClicked()
             is MainEvent.DishClicked -> dishClicked(event.dish)
+            is MainEvent.ChkSelectChanged -> chkSelectChanged(event.dish)
         }
+    }
+
+    private fun chkSelectChanged(dish: DishItemUi) {
+        val newStateDishes = viewState.value.dishes.toMutableList()
+        val index = newStateDishes.indexOfFirst { it.id == dish.id }
+        if (index !in newStateDishes.indices)
+            Log.d("MainViewModel.dishClicked", "index not range dishes")
+        newStateDishes[index] = newStateDishes[index].copy(isChecked = !newStateDishes[index].isChecked)
+        _viewState.value = viewState.value
+            .copy(
+                dishes = newStateDishes
+            )
     }
 
     private fun deleteButtonClicked() {
