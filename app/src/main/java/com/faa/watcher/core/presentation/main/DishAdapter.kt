@@ -28,7 +28,11 @@ class DishAdapter(
             if (payloads.isEmpty()) {
                 binding = ItemDishBinding.bind(itemView).apply {
                     txtName.text = item.name
-                    txtPrice.text = item.price.toString()
+                    txtPrice.text = context.resources.getQuantityString(
+                        R.plurals.currency,
+                        item.price,
+                        item.price
+                    )
                     Glide.with(context)
                         .load(item.image)
                         .error(R.drawable.baseline_no_food_24)

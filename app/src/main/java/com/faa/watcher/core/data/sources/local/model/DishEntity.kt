@@ -19,3 +19,13 @@ data class DishEntity(
         )
     }
 }
+
+fun Dish.toEntity(): DishEntity {
+    return DishEntity(
+        id = id,
+        name = name,
+        description = description,
+        image = image,
+        price = price
+    )
+}

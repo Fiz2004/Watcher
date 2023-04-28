@@ -3,7 +3,8 @@ package com.faa.watcher.core.presentation.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.faa.watcher.core.domain.usecase.GetDishesUsecase
+import com.faa.watcher.core.domain.usecase.DeleteDishesUseCase
+import com.faa.watcher.core.domain.usecase.GetDishesUseCase
 import com.faa.watcher.core.presentation.main.model.DishItemUi
 import com.faa.watcher.core.presentation.main.model.MainEvent
 import com.faa.watcher.core.presentation.main.model.MainViewEffect
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getDishesUsecase: GetDishesUsecase
+    private val getDishesUseCase: GetDishesUseCase,
+    private val deleteDishesUseCase: DeleteDishesUseCase
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(MainViewState())
@@ -30,7 +32,7 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val dishes = getDishesUsecase()
+            val dishes = getDishesUseCase(isNeedRefresh = true)
             _viewState.value = _viewState.value
                 .copy(dishes = dishes.map { it.toItemUi() })
         }
@@ -57,7 +59,14 @@ class MainViewModel @Inject constructor(
     }
 
     private fun deleteButtonClicked() {
+        viewModelScope.launch {
+            val selectedDishes = viewState.value.dishes.filter { it.isChecked }
+            deleteDishesUseCase(selectedDishes.map { it.toDomain() })
 
+            val dishes = getDishesUseCase(isNeedRefresh = false)
+            _viewState.value = _viewState.value
+                .copy(dishes = dishes.map { it.toItemUi() })
+        }
     }
 
     private fun dishClicked(dish: DishItemUi) {

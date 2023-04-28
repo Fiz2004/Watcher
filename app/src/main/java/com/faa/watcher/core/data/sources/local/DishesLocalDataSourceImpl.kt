@@ -23,4 +23,12 @@ class DishesLocalDataSourceImpl @Inject constructor(
             return@withContext true
         }
     }
+
+    override suspend fun deleteDishes(dishes: List<DishEntity>): Boolean {
+        return withContext(dispatcher) {
+            this@DishesLocalDataSourceImpl.dishes =
+                this@DishesLocalDataSourceImpl.dishes.filter { !dishes.map { it.id }.contains(it.id) }
+            return@withContext true
+        }
+    }
 }

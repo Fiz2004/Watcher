@@ -2,4 +2,12 @@
     <string name="app_name">My Application</string>
 
     <string name="main_delete">Удалить</string>
+
+    <plurals name="currency">
+        <item quantity="one">%d рубль</item>
+        <item quantity="two">%d рубля</item>
+        <item quantity="few">%d рубля</item>
+        <item quantity="many">%d рублей</item>
+        <item quantity="other">рублей</item>
+    </plurals>
 </resources>

@@ -11,7 +11,17 @@ data class DishItemUi(
     val image: String?,
     val price: Int,
     val isChecked: Boolean
-)
+) {
+    fun toDomain(): Dish {
+        return Dish(
+            id = id,
+            name = name,
+            description = description,
+            image = image,
+            price = price
+        )
+    }
+}
 
 fun Dish.toItemUi(): DishItemUi {
     return DishItemUi(
