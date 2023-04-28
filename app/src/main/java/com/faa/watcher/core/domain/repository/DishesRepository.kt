@@ -8,4 +8,5 @@ interface DishesRepository {
 
     suspend fun deleteDishes(dishes: List<Dish>): Result<Unit>
     suspend fun getDish(id: String): Result<Dish>
+    suspend fun getDishes()
 }

@@ -4,11 +4,12 @@
     <string name="main_delete">Удалить</string>
 
     <string name="error_hint">Произошла ошибка, загрузка не удалась</string>
-    <string name="error_unknown">Произогла неизвестная ошибка, пожалуйста сообщите об этом разработчикам</string>
+    <string name="error_unknown">Произошла неизвестная ошибка, пожалуйста сообщите об этом разработчикам</string>
     <string name="error_no_connection_server">Отсутствует подключение к серверу, повторите позже</string>
     <string name="error_no_connection">Отсутствует подключение к сети</string>
 
     <string name="retry_request">Повторить запрос</string>
+    <string name="dish_not_found">Блюда не найдены</string>
 
     <plurals name="currency">
         <item quantity="one">%d рубль</item>
@@ -17,6 +18,5 @@
         <item quantity="many">%d рублей</item>
         <item quantity="other">рублей</item>
     </plurals>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

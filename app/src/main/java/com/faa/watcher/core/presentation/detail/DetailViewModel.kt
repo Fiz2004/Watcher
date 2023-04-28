@@ -1,13 +1,12 @@
-package com.faa.watcher.main.presentation.detail
+package com.faa.watcher.core.presentation.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.faa.watcher.common.handleException
-import com.faa.watcher.main.domain.usecase.GetDishUseCase
-import com.faa.watcher.main.presentation.detail.model.DetailViewEffect
-import com.faa.watcher.main.presentation.detail.model.DetailViewState
-import com.faa.watcher.main.presentation.detail.model.toDetailDishItemUiState
+import com.faa.watcher.core.domain.usecase.GetDishUseCase
+import com.faa.watcher.core.presentation.detail.model.DetailViewEffect
+import com.faa.watcher.core.presentation.detail.model.DetailViewState
+import com.faa.watcher.utils.handleThrowable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,8 +23,8 @@ class DetailViewModel @Inject constructor(
 
     val id: String? = savedStateHandle["id"]
 
-    private val _uiState = MutableStateFlow(DetailViewState())
-    val uiState = _uiState.asStateFlow()
+    private val _viewState = MutableStateFlow(DetailViewState())
+    val viewState = _viewState.asStateFlow()
 
     private val _viewEffect = MutableSharedFlow<DetailViewEffect>()
     val viewEffect = _viewEffect.asSharedFlow()
@@ -35,17 +34,18 @@ class DetailViewModel @Inject constructor(
             if (id == null) {
                 return@launch
             }
-            try {
-                val dish = getDish(id)
-                _uiState.value = uiState.value
-                    .copy(dish = dish.toDetailDishItemUiState())
-            } catch (e: Exception) {
-                handleException(e) { uiText ->
-                    viewModelScope.launch {
+            val dish = getDish(id)
+            dish.fold(
+                onSuccess = {
+                    _viewState.value = viewState.value
+                        .copy(dish = it)
+                },
+                onFailure = { throwable ->
+                    handleThrowable(throwable) { uiText ->
                         _viewEffect.emit(DetailViewEffect.ShowMessage(uiText))
                     }
                 }
-            }
+            )
 
         }
     }

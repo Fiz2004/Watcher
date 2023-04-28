@@ -5,17 +5,41 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Watcher.TextView" parent=""></style>
 
-    <style name="Watcher.TextView.Title">
-        <item name="android:textSize">22sp</item>
+    <style name="Watcher.TextView" parent="">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Watcher.TextView.Name">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textAppearance">@style/Watcher.TextAppearance.Title</item>
     </style>
 
     <style name="Watcher.TextView.Price">
-        <item name="android:textSize">12sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textAppearance">@style/Watcher.TextAppearance.Price</item>
     </style>
 
     <style name="Watcher.TextView.Description">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAppearance">@style/Watcher.TextAppearance.Description</item>
+    </style>
+
+    <style name="Watcher.TextAppearance" parent=""></style>
+
+    <style name="Watcher.TextAppearance.Title">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Watcher.TextAppearance.Price">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Watcher.TextAppearance.Description">
         <item name="android:textSize">16sp</item>
     </style>
 

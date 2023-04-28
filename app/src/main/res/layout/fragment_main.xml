@@ -29,6 +29,17 @@
             android:text="@string/main_delete" />
     </LinearLayout>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtNotFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/dish_not_found"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <include
         android:id="@+id/networkState"
         layout="@layout/view_network_state" />

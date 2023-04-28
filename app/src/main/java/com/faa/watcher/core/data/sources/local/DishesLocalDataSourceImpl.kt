@@ -10,6 +10,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+private const val TIME_DELETE = 1500L
+
 @Singleton
 class DishesLocalDataSourceImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
@@ -30,9 +32,11 @@ class DishesLocalDataSourceImpl @Inject constructor(
 
     override suspend fun deleteDishes(dishes: List<DishEntity>): Result<Unit> {
         return withContext(dispatcher) {
-            delay(1500)
+            delay(TIME_DELETE)
             this@DishesLocalDataSourceImpl.dishes.value = this@DishesLocalDataSourceImpl.dishes.value
-                ?.filter { !dishes.map { it.id }.contains(it.id) }
+                ?.filter { dishEntity ->
+                    !dishes.map { it.id }.contains(dishEntity.id)
+                }
             Result.success(Unit)
         }
     }

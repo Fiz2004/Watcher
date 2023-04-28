@@ -1,4 +1,4 @@
-package com.faa.watcher.core.presentation.main.model
+package com.faa.watcher.core.presentation.model
 
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil

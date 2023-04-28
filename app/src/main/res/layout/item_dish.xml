@@ -20,49 +20,37 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_margin="8dp"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@id/gdlMain"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@id/txtName"
             app:layout_constraintStart_toEndOf="@id/chkSelect"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             tools:src="@tools:sample/avatars" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gdlMain"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.35" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAlignment="center"
-            android:textAppearance="@style/Watcher.TextView.Title"
+            style="@style/Watcher.TextView.Name"
             app:layout_constraintBottom_toTopOf="@id/txtPrice"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/gdlMain"
+            app:layout_constraintStart_toEndOf="@id/imgImage"
             app:layout_constraintTop_toTopOf="@id/imgImage"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="@tools:sample/cities" />
+            tools:text="@tools:sample/lorem/random" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAlignment="textEnd"
-            android:textAppearance="@style/Watcher.TextView.Price"
+            style="@style/Watcher.TextView.Price"
             app:layout_constraintBottom_toBottomOf="@id/imgImage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/gdlMain"
+            app:layout_constraintStart_toEndOf="@id/imgImage"
             app:layout_constraintTop_toBottomOf="@id/txtName"
             tools:text="@tools:sample/lorem" />
 

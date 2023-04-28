@@ -26,33 +26,36 @@ class DishesRepositoryImpl @Inject constructor(
         externalScope.launch {
 
             launch {
-                dishesLocalDataSources.observeDishes().collect {
-                    dishes.value = Result.success(it?.map { it.toDomain() })
+                dishesLocalDataSources.observeDishes().collect { dishes ->
+                    this@DishesRepositoryImpl.dishes.value = Result.success(dishes?.map { it.toDomain() })
                 }
             }
 
             launch {
-                val dishesNetwork = dishesNetworkDataSources.getDishes()
-                dishesNetwork.fold(
-
-                    onSuccess = {
-                        dishesLocalDataSources.saveDishes(it.map { it.toEntity() })
-                    },
-
-                    onFailure = {
-                        dishes.value = Result.failure(it)
-                    }
-
-                )
-
+                refreshDishes()
             }
         }
     }
 
+    private suspend fun refreshDishes() {
+        val dishesNetwork = dishesNetworkDataSources.getDishes()
+        dishesNetwork.fold(
+
+            onSuccess = { dishes ->
+                dishesLocalDataSources.saveDishes(dishes.map { it.toEntity() })
+            },
+
+            onFailure = {
+                dishes.value = Result.failure(it)
+            }
+
+        )
+    }
+
     override suspend fun getDish(id: String): Result<Dish> {
         return dishes.value.fold(
-            onSuccess = {
-                val dish = it?.find { it.id == id }
+            onSuccess = { dishes ->
+                val dish = dishes?.find { it.id == id }
                 if (dish != null) {
                     Result.success(dish)
                 } else {
@@ -63,6 +66,10 @@ class DishesRepositoryImpl @Inject constructor(
                 Result.failure(it)
             }
         )
+    }
+
+    override suspend fun getDishes() {
+        refreshDishes()
     }
 
     override fun observeDishes(): StateFlow<Result<List<Dish>?>> {

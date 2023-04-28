@@ -5,7 +5,7 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.faa.watcher.R
-import com.faa.watcher.core.presentation.main.model.DishItemUi
+import com.faa.watcher.core.presentation.model.DishItemUi
 import com.faa.watcher.databinding.ItemDishBinding
 
 class DishAdapter(
@@ -35,7 +35,8 @@ class DishAdapter(
                     )
                     Glide.with(context)
                         .load(item.image)
-                        .error(R.drawable.baseline_no_food_24)
+                        .placeholder(R.drawable.pic_load)
+                        .error(R.drawable.pic_error_load)
                         .into(imgImage)
                     root.setOnClickListener {
                         itemClicked(item)

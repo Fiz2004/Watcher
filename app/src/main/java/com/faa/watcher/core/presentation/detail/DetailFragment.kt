@@ -1,4 +1,4 @@
-package com.faa.watcher.main.presentation.detail
+package com.faa.watcher.core.presentation.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.faa.watcher.R
-import com.faa.watcher.common.collectUiEffect
-import com.faa.watcher.common.collectUiState
-import com.faa.watcher.common.showToast
+import com.faa.watcher.core.presentation.detail.model.DetailViewEffect
+import com.faa.watcher.core.presentation.detail.model.DetailViewState
 import com.faa.watcher.databinding.FragmentDetailBinding
-import com.faa.watcher.main.presentation.detail.model.DetailViewEffect
-import com.faa.watcher.main.presentation.detail.model.DetailViewState
+import com.faa.watcher.utils.collectUiEffect
+import com.faa.watcher.utils.collectUiState
+import com.faa.watcher.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +35,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collectUiState(viewModel.uiState, { binding.updateScreenState(it) })
+        collectUiState(viewModel.viewState, { binding.updateScreenState(it) })
         collectUiEffect(viewModel.viewEffect, ::reactTo)
     }
 
@@ -47,6 +47,11 @@ class DetailFragment : Fragment() {
             .into(imgImage)
 
         txtName.text = viewState.dish?.name.orEmpty()
+        txtPrice.text = context?.resources?.getQuantityString(
+            R.plurals.currency,
+            viewState.dish?.price ?: 0,
+            viewState.dish?.price
+        )
         txtDescription.text = viewState.dish?.description.orEmpty()
     }
 

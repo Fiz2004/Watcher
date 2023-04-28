@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.animation.ScaleInAnimation
-import com.faa.watcher.core.presentation.main.model.DishItemUiComparator
 import com.faa.watcher.core.presentation.main.model.MainEvent
 import com.faa.watcher.core.presentation.main.model.MainViewEffect
 import com.faa.watcher.core.presentation.main.model.MainViewState
+import com.faa.watcher.core.presentation.model.DishItemUiComparator
 import com.faa.watcher.databinding.FragmentMainBinding
 import com.faa.watcher.utils.LinearSpacingDecoration
 import com.faa.watcher.utils.collectUiEffect
@@ -69,17 +69,15 @@ class MainFragment : Fragment() {
 
     private fun FragmentMainBinding.setupListeners() {
         btnDelete.setOnClickListener { viewModel.onEvent(MainEvent.DeleteButtonClicked) }
+        networkState.btnRetry.setOnClickListener { viewModel.onEvent(MainEvent.ReloadData) }
     }
 
     private fun FragmentMainBinding.updateScreenState(viewState: MainViewState) {
         networkState.progress.isVisible = viewState.isLoading
         networkState.containerErrorState.isVisible = viewState.isError
-        containerContent.isVisible = if (viewState.isLoading && viewState.dishes?.isEmpty() == true) {
-            false
-        } else {
-            !viewState.isError
-        }
-        binding.btnDelete.isEnabled = viewState.isBtnEnabled && !viewState.isLoading
+        containerContent.isVisible = viewState.isContainerMainIsVisible
+        binding.txtNotFound.isVisible = viewState.isTxtNotFoundIsVisible
+        binding.btnDelete.isEnabled = viewState.isBtnDeleteEnabled
 
         if (adapter.data.isEmpty() || viewState.dishes?.isEmpty() == true) {
             adapter.setNewInstance(viewState.dishes?.toMutableList())
@@ -91,7 +89,7 @@ class MainFragment : Fragment() {
     private fun reactTo(viewEffect: MainViewEffect) {
         when (viewEffect) {
             is MainViewEffect.ShowMessage -> {
-                showToast(viewEffect.message)
+                showToast(viewEffect.uiText)
             }
 
             is MainViewEffect.MoveDetailScreen -> {
