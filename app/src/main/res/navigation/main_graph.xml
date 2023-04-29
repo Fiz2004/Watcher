@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.faa.watcher.core.presentation.main.MainFragment"
+        android:name="com.faa.watcher.main.presentation.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.faa.watcher.core.presentation.detail.DetailFragment"
+        android:name="com.faa.watcher.main.presentation.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
         <argument

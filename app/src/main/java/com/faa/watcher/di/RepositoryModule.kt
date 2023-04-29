@@ -1,7 +1,7 @@
 package com.faa.watcher.di
 
-import com.faa.watcher.core.data.repository.DishesRepositoryImpl
-import com.faa.watcher.core.domain.repository.DishesRepository
+import com.faa.watcher.main.data.repository.DishesRepositoryImpl
+import com.faa.watcher.main.domain.repository.DishesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
