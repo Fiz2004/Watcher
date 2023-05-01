@@ -1,7 +1,7 @@
 package com.faa.watcher.main.data.sources.network
 
-import com.faa.watcher.main.data.sources.network.model.DishDto
+import com.faa.watcher.main.domain.model.Dish
 
 interface DishesNetworkDataSource {
-    suspend fun getDishes(): Result<List<DishDto>>
+    suspend fun getDishes(): List<Dish>
 }

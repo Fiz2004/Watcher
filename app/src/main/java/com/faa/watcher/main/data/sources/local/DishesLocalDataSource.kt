@@ -1,10 +1,13 @@
 package com.faa.watcher.main.data.sources.local
 
-import com.faa.watcher.main.data.sources.local.model.DishEntity
-import kotlinx.coroutines.flow.StateFlow
+import com.faa.watcher.main.domain.model.Dish
+import kotlinx.coroutines.flow.Flow
 
 interface DishesLocalDataSource {
-    suspend fun observeDishes(): StateFlow<List<DishEntity>?>
-    suspend fun saveDishes(dishes: List<DishEntity>): Result<Unit>
-    suspend fun deleteDishes(dishes: List<DishEntity>): Result<Unit>
+    val dishes: Flow<List<Dish>?>
+
+    suspend fun getDish(id: String): Dish
+    suspend fun getDishes(): List<Dish>?
+    suspend fun saveDishes(dishes: List<Dish>)
+    suspend fun deleteDishes(dishesIds: Set<String>)
 }

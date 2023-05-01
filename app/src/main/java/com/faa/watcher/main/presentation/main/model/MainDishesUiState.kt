@@ -1,9 +1,7 @@
 package com.faa.watcher.main.presentation.main.model
 
-import com.faa.watcher.main.presentation.model.DishItemUi
-
-data class MainViewState(
-    val dishes: List<DishItemUi>? = null,
+data class MainDishesUiState(
+    val dishes: List<MainDishesItemUiState>? = null,
     val isLoading: Boolean = false,
     val isError: Boolean = false
 ) {
@@ -23,6 +21,6 @@ data class MainViewState(
 
     val isBtnDeleteEnabled: Boolean
         get() {
-            return dishes?.count { it.isChecked } != 0 && !isLoading
+            return dishes != null && dishes.count { it.isChecked } != 0 && !isLoading && !isError
         }
 }

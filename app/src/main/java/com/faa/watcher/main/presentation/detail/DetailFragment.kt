@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.faa.watcher.R
-import com.faa.watcher.main.presentation.detail.model.DetailViewEffect
-import com.faa.watcher.main.presentation.detail.model.DetailViewState
-import com.faa.watcher.databinding.FragmentDetailBinding
 import com.faa.watcher.common.collectUiEffect
 import com.faa.watcher.common.collectUiState
 import com.faa.watcher.common.showToast
+import com.faa.watcher.databinding.FragmentDetailBinding
+import com.faa.watcher.main.presentation.detail.model.DetailViewEffect
+import com.faa.watcher.main.presentation.detail.model.DetailViewState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +35,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collectUiState(viewModel.viewState, { binding.updateScreenState(it) })
+        collectUiState(viewModel.uiState, { binding.updateScreenState(it) })
         collectUiEffect(viewModel.viewEffect, ::reactTo)
     }
 

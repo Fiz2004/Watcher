@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetDishUseCase @Inject constructor(private val dishesRepository: DishesRepository) {
 
-    suspend operator fun invoke(id: String): Result<Dish> {
+    suspend operator fun invoke(id: String): Dish {
         return dishesRepository.getDish(id)
     }
 }

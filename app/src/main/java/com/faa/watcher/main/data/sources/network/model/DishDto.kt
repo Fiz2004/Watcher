@@ -1,6 +1,6 @@
 package com.faa.watcher.main.data.sources.network.model
 
-import com.faa.watcher.main.data.sources.local.model.DishEntity
+import com.faa.watcher.main.domain.model.Dish
 
 data class DishDto(
     val id: String,
@@ -9,11 +9,11 @@ data class DishDto(
     val image: String?,
     val price: Int,
 ) {
-    fun toEntity(): DishEntity {
-        return DishEntity(
+    fun toDomain(): Dish {
+        return Dish(
             id = id,
             name = name,
-            description = description,
+            description = description.orEmpty(),
             image = image,
             price = price
         )

@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class DeleteDishesUseCase @Inject constructor(private val dishesRepository: DishesRepository) {
 
-    suspend operator fun invoke(dishesIds: Set<String>): Result<Unit> {
+    suspend operator fun invoke(dishesIds: Set<String>) {
         return dishesRepository.deleteDishes(dishesIds)
     }
 }

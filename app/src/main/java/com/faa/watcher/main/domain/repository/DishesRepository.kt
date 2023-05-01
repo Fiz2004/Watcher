@@ -1,12 +1,12 @@
 package com.faa.watcher.main.domain.repository
 
 import com.faa.watcher.main.domain.model.Dish
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface DishesRepository {
-    fun observeDishes(): StateFlow<Result<List<Dish>?>>
+    val dishes: Flow<List<Dish>?>
 
-    suspend fun deleteDishes(dishesIds: Set<String>): Result<Unit>
-    suspend fun getDish(id: String): Result<Dish>
-    suspend fun getDishes()
+    suspend fun deleteDishes(dishesIds: Set<String>)
+    suspend fun getDish(id: String): Dish
+    suspend fun fetchDishes()
 }
